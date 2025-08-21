@@ -2,6 +2,7 @@ package IntegracionBackFront.backfront.Config.Cloudinary;
 
 import com.cloudinary.Cloudinary;
 import io.github.cdimascio.dotenv.Dotenv;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
@@ -9,7 +10,8 @@ import java.util.HashMap;
 import java.util.Map;
 
 @Configuration
-public class cloudinaryConfig {
+public class CloudinaryConfig {
+
 
     private String cloudName;
     private String apiKey;
@@ -17,19 +19,16 @@ public class cloudinaryConfig {
 
     @Bean
     public Cloudinary cloudinary(){
-
-        //Cargando las variables del archivo .env
+        //Crear un objeto para leer las variables del archivo .env
         Dotenv dotenv = Dotenv.load();
 
-        //Mapa para almacenar la clave valor de cloudinary
+        //Crear un Map para almacenar la configuracion necesaria para Cloudinary
         Map<String, String> config = new HashMap<>();
 
-        //Obteniendo las credenciales desde las variables de entorno
         config.put("cloud_name", dotenv.get("CLOUDINARY_CLOUD_NAME"));
         config.put("api_key", dotenv.get("CLOUDINARY_API_KEY"));
         config.put("api_secret", dotenv.get("CLOUDINARY_API_SECRET"));
 
-        //Retornar una nueva instancia de cloudinary con la configuracion cargada
         return new Cloudinary(config);
     }
 }
